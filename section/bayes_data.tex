@@ -1,0 +1,38 @@
+\section{Bayesian Data Collection}
+
+Goal: find the position to collect data to get the most useful information.
+
+\subsection{Active Learning}
+
+Goal: the underlying function $\mu(x)$, i.e., maximize information gain between the dataset and the function.
+
+Mutual Information: $I(X;Y) = H(X)-H(X\mid Y)$, where $H(X)=\E_X -\log p(X)$ and $H(X\mid Y)=\E_Y H(X\mid Y)$. It is symmetric, i.e., $I(X;Y)=I(Y;X)$. When $X\sim\normal(\mu,\Sigma)$, $Y=X+\epsilon$ and $\epsilon\sim\normal(0,\sigma^2I)$, $I(X;Y)=\frac{1}{2}\log|I+\sigma^{-2}\Sigma|$. The information gain $F(S)$ is the mutual information between current model and the new data points $S$.
+$F(S)$ is monotone submodular: $\forall x$ and $\forall A\subset B$, we have $F(A\cup\{x\})-F(A) \ge F(B\cup\{x\})-F(B)$.
+
+In general, information gain is NP-hard to optimize. Therefore, we take a greedy strategy, i.e. use the data point that maximizes the info-gain sequentially. $x_{t+1}=\argmax \frac{1}{2}\log(1+\sigma_t^2(x)/\sigma_n^2) = \argmax \sigma_t^2(x)$, i.e., this is equivalent to pick the position with the maximum variance currently. This provides a $1-\frac{1}{e}$ factor of guarantee of the optimal. In the heteroscedastic case, where $\sigma_n^2$ depends on $x$, $x_{t+1}=\argmax \sigma_t^2(x)/\sigma_n^2(x)$.
+
+\subsection{Bayesian Optimization}
+
+Goal: the maximum of a function, i.e., find $\argmax f(x)$.
+
+Settings: given unknown function $f$, choose $\{x_i\}$ adaptively and observe $y_t=f(x_t)+\epsilon_t$ to find $x^*=\argmax f(x)$. Define cumulative regret $R_T=\sum_{t=1}^T (\max f(x)-f(x_t))$, then sublinear $R_T$ ($R_T/T\rightarrow 0$) is equivalent to $\max_t f(x_t)\rightarrow f(x^*)$. We use GP to model the belief about the function: $GP(\mu_t(x), \sigma^2_t(x))$.
+
+\subsubsection*{Upper Confidence Sampling (GP-UCB)}
+
+Idea: optimism. Choose $x_{t+1} = \argmax \mu_{t-1}(x)+\beta_{t+1} \sigma_{t}(x)$. The cumulative regret is $O\left(\sqrt{\gamma_T / T}\right)$ up to a log factor if $\beta_t$ is chosen correctly, where $\gamma_T=\max_{|S|\le T} I(f;y_S)$. The regret depends on how quickly we can gain information. If we can gain information quickly, then $\gamma_T / T$ decays quickly, thus the regret is small.
+
+\inLongVersion{
+$\gamma_T$ for common kernels (all sublinear):
+\begin{enumerate}
+    \item Linear: $\gamma_T=O(d\log T)$.
+    \item Squared exponential: $\gamma_T=O(\log^{d+1}(T))$.
+    \item Matern with $v>0.5$: $O\left(T \frac{d}{2 v+d}(\log T)^{\frac{2 v}{2 v+d}}\right)$.
+\end{enumerate}
+
+
+Other acquisition functions include expected improvement and probability of improvement.
+}
+
+\subsubsection*{Thompson Sampling}
+
+Idea: draw a sample as the acquisition fucntion. At each iteration, draw $\hat{f}\sim P(f\mid x_{1:t}, y_{1:t})$ and choose $x_{t+1}=\argmax \hat{f}(x)$.

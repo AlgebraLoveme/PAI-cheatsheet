@@ -1,0 +1,77 @@
+\section{Probabilistic Planning}
+
+$\epsilon$-optimal policy: a policy $\pi$ s.t. $|V^\pi-V^*|\le \epsilon$ for all initial settings.
+
+\subsection{Markov Decision Process}
+
+Setting: a Markov Chain where a reward function $r(x,a)$ and a transition probability $P(x^\prime\mid x, a)$ is given for taking action $a$. The policy can be determined $\pi: X\rightarrow A$ and randomized $\pi: X\rightarrow P(A)$. The goal is to maximize the expected reward $J(\pi)=\E(\sum_{i=1}^\infty \gamma^{i-1} r(X_i, \pi(X_i)))$.
+
+\subsubsection*{Value Function of A Policy}
+
+Define the value function: $V^\pi(x)=J(\pi\mid X_0=x)$. By $V^{\pi}(x)=r(x, \pi(x))+\gamma \sum_{x^{\prime}} P\left(x^{\prime} \mid x, \pi(x)\right) V^{\pi}\left(x^{\prime}\right)$, we can solve for $V^\pi(x)$ via solving linear equations, which is $O(|X|^3)$. 
+For computational reasons, we can use fixed-point iteration to solve approximately:
+ $V_{t}^{\pi}=r^{\pi}+\gamma T^{\pi} V_{t-1}^{\pi}$.
+
+
+
+\subsubsection*{Policy Iteration}
+
+Bellman Theorem: the optimal policy is the greedy policy w.r.t. its induced value function. The policy iteration algorithm iteratively computes the value function of the current policy (initialized randomly) and then set the next policy to be the greedy policy of the current value function. It is guaranteed that $V^{\pi_{t+1}}(x)\ge V^{\pi_t}(x)$ and it converges to the optimal $\pi^*$ in $O(n^2m/(1-\gamma))$, up to a log factor.
+
+\subsubsection*{Value Iteration}
+
+Idea: directly use fixed-point iteration on $V^*(x)$. At each iteration, set $Q(x,a)=r(x,a)+\gamma \sum_{x^\prime} P(x^\prime\mid x, a) V_{t-1}(x^\prime)$ and $V_t(x)=\max_a Q_t(x,a)$. After convergence, choose the greedy policy w.r.t. the value function.
+
+\subsubsection*{Partially Observable MDP}
+
+Instead of observing $X_t$ directly, we are given noisy observation $Y_t$ of $X_t$. Therefore, we put a belief on states $b_t(x)=P(X_t\mid Y_{1:t})$. The transition model becomes $P\left(Y_{t+1}=y \mid b_{t}, a_{t}\right)=\sum_{x, x^{\prime}} b_{t}(x) P\left(x^{\prime} \mid x, a_{t}\right) P\left(y \mid x^{\prime}\right)$ and $b_{t+1}\left(x^{\prime}\right)=\frac{1}{Z} \sum_{x} b_{t}(x) P\left(X_{t+1}=x^{\prime} \mid X_{t}=x, a_{t}\right) P\left(y_{t+1} \mid x^{\prime}\right)$.
+
+\subsection{Reinforcement Learning}
+
+Goal: learn a policy when no model about the environment is given. The agent gets information after an action.
+
+\subsubsection*{Model-based RL}
+
+Idea: learn the underlying MDP and use the policy learned for the MDP.
+$\hat{P}(X_{t+1}\mid X_t, A) = \text{count}(X_{t+1}, X_t, A) / \text{count}(X_t,A)$. $\hat{r}(x,a) = \frac{1}{|S|} \sum_S R_t$, where $S=\{t: X_t=x, A_t=a\}$. Challenge: balance the estimation of the MDP and the cumulative regret (explore-exploit dilemma).
+
+Algorithms:
+\begin{enumerate}
+    \item Temporal Difference Learning to compute value function of a policy: Bootstrap + Robbins-Monro on $V^\pi (x) = r(x,\pi(x)) + \gamma V^\pi (x^\prime)$, i.e., (1) follow $\pi$ to obtain trajectories $(x,a,r,x^\prime)$ (2) update by bootstrapping from the trajectory $\hat{V}^{\pi}(x) \leftarrow\left(1-\alpha_{t}\right) \hat{V}^{\pi}(x)+\alpha_{t}\left(r+\gamma \hat{V}^{\pi}\left(x^{\prime}\right)\right)$. Can be converted to be off-policy via replacing $V^\pi(x)$ by $Q^\pi(x,a)$: $\hat{Q}^{\pi}(x, a) \leftarrow\left(1-\alpha_{t}\right) \hat{Q}^{\pi}(x, a)+\alpha_{t}\left(r+\gamma \hat{Q}^{\pi}\left(x^{\prime}, \pi\left(x^{\prime}\right)\right)\right)$.
+    \item $\epsilon_t$ greedy: with probability $\epsilon_t$, pick randomly, o.w. pick the best action using current MDP model. If $\sum \epsilon_t=\infty$ and $\sum \epsilon_t^2<\infty$, then guaranteed to converge to the optimal almost surely. Cons: doesn't quickly eliminate clearly suboptimal actions.
+    \item $R_{\max}$: (1) add a ``fairy tale'' state $x^*$, set $r(x,a)=R_{\max}$ and $P(x^*\mid x,a)=1$ for all states and actions; (2) at each iteration, execute the current optimal policy; (3) after collecting ``enough'' data, update the MDP model. It is guaranteed that (1) after a fixed timesteps, the algorithm either obtains near-optimal reward, or visits at least one unknown state-action pair; (2) with probability $1-\delta$, $R_{\max}$ reaches an $\epsilon$-optimal policy in \#steps polynomial in $|X|,|A|,1/\epsilon, \log(1/\delta)$ and $R_{\max}$.
+\end{enumerate}
+
+Cons: (1) need to store $\hat{P}(X_{t+1}\mid X_t, A)$ and $\hat{r}(x,a)$, which is $O(|X|^2 |A|)$; (2) need to solve another MDP using policy/value iteration after an update. 
+
+\subsubsection*{Model-free RL}
+
+Idea: estimate $V^*$ and use the greedy policy.
+
+Methods:
+\begin{enumerate}
+    \item Q-learning: generalized from TD-learning. After observing a transition $(x,a,r,x^\prime)$ which does \emph{not} necessarily follow a policy, we update $\hat{Q}^{*}(x, a) \leftarrow\left(1-\alpha_{t}\right) \hat{Q}^{*}(x, a)+\alpha_{t}\left(r+\gamma \max _{a^{\prime}} \hat{Q}^{*}\left(x^{\prime}, a^{\prime}\right)\right)$. It is guaranteed that if all state-action pairs are chosen infinitely often and Robbins-Monro condition is satisfied, then $\hat{Q}^{*}$ converges to $Q^*$ almost surely. Therefore, Q-learning can learn from both off-policy (no control over actions) and on-policy (full control over actions) setting.
+    \item Optimistic Q-learning: $\hat{Q}_0^{*}(x, a)=\frac{R_{\max }}{1-\gamma} \prod_{t}\left(1-\alpha_{t}\right)^{-1}$ and pick $a_{t} = \arg \max _{a} \hat{Q}^{*}\left(x_{t}, a\right)$. Guaranteed that with prob. $1-\delta$, obtains $\epsilon$-optimal in \#steps polynomial in $|X|,|A|,1/\epsilon,\log(1/\delta)$.
+\end{enumerate}
+
+Pro: only store $\hat{Q}^{*}\left(x^{\prime}, a^{\prime}\right)$, which is $O(|X||A|)$.
+
+\subsubsection*{Scaling up via Approximation}
+
+Idea: approximate tabular func by NN. Value approx: DQN; Policy approx: REINFORCE.
+
+Note that tabular TD-learning can be viewed as SGD on $\ell_{2}\left(\theta ; x, x^{\prime}, r\right)=\left(V(x ; \theta)-r-\gamma V\left(x^{\prime} ; \theta_{\text {old }}\right)\right)^{2}$ or $\left(Q(x, a ; \theta)-r-\gamma \max _{a^{\prime}} Q\left(x^{\prime}, a^{\prime} ; \theta_{o l d}\right)\right)^{2}$. Therefore, we can use NN to approximate $V(x;\theta)$ or $Q(x,a;\theta)$. \emph{DQN} also applies experience replay. To increase stability, \emph{double DQN} use the current network to compute the argmax action (but still use the old network as the target).
+
+Q-learning requires to compute the policy via $a_t=\argmax Q(x_t,a;\theta)$. For large/continuous action space, this is intractable. REINFORCE use parametrized policy $\pi(x):=\pi(x;\theta)$ to avoid the argmax and optimize via policy gradient:
+ maximize $J(\theta) = \E_{\tau \sim\pi_\theta} r(\tau)$, where $r(\tau)=\sum \gamma^t r(x_t,a_t)$. The policy gradient is $\nabla J(\theta)=\E_{\tau\sim \pi_\theta} [r(\tau)\nabla \log \pi_\theta(\tau)] = \E_{\tau\sim\pi_\theta} [r(\tau)\sum_t \nabla \log \pi(a_t\mid x_t;\theta)] = \E_{\tau\sim\pi_\theta} [\sum_{t=0}^T (r(\tau)-b(\tau_{0:t-1})) \nabla \log \pi(a_t\mid x_t;\theta)]$ for any $b(\tau_{0:t-1})$. Let $G_t=\sum_{s=t}^T \gamma^{s-t} r^s$ to be the ``reward to go'' and $\nabla J(\theta)=\mathbb{E}_{\tau \sim \pi_{\theta}}\left[\sum_{t=0}^{T} \gamma^{t} G_{t} \nabla \log \pi\left(a_{t} \mid x_{t} ; \theta\right)\right]$.
+
+ Advantage function: $A^{\pi}(x, a)=Q^{\pi}(x, a)-V^{\pi}(x)$, i.e., the advantage of picking $a$ at current step instead of following $\pi$.
+
+ \subsubsection*{Actor-Critic}
+
+Idea: parametrize both the policy and the action-value function.
+
+We can write the policy gradient (note reward-to-go is exactly $Q(s,a)$) as $\nabla J(\theta)=\mathbb{E}_{(x, a) \sim \pi_{\theta}}[Q(x, a; \theta_Q) \nabla \log \pi(a \mid x ; \theta_\pi)]$. Actor-Crtic algorithm updates the parameters after observing $(x,a,r,x^\prime)$: $\theta_{\pi} \leftarrow \theta_{\pi}+\eta_{t} Q\left(x, a ; \theta_{Q}\right) \nabla \log \pi\left(a \mid x ; \theta_{\pi}\right)$ and
+$\theta_{Q} \leftarrow \theta_{Q}-\eta_{t}\left(Q\left(x, a ; \theta_{Q}\right)-r-\gamma Q\left(x^{\prime}, \pi\left(x^{\prime}, \theta_{\pi}\right) ; \theta_{Q}\right)\right) \cdot \nabla Q(x, a ; \theta_{Q})$.
+
+To generalize actor-critic to be off-policy, we can replace the $\max_a Q(x,a)$ by $Q(x, \pi(x))$, i.e., $L\left(\theta_{Q}\right)=\sum \left(r+\gamma Q\left(x^{\prime}, \pi\left(x^{\prime} ; \theta_{\pi}\right) ; \theta_{Q}^{\text {old }}\right)-Q\left(x, a ; \theta_{Q}\right)\right)^{2}$ and $\theta_{\pi}^{*} = \arg \max _{\theta} \mathbb{E}_{x \sim \mu}\left[Q\left(x, \pi(x ; \theta) ; \theta_{Q}\right)\right]$.

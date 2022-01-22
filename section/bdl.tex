@@ -1,0 +1,13 @@
+\section{Bayesian Deep Learning}
+
+Idea: apply Bayesian methods on NN, i.e., use the posterior distribution of weights of NN to do inference. $p(y\mid x;\theta) = \normal(\mu(x;\theta), \sigma^2(x;\theta))$.
+
+\subsection{MAP inference for BNN}
+
+If we apply $p(\theta)=\normal(0,\sigma_p^2 I)$, then $\hat{\theta} = \argmin -\log p(\theta) - \sum \log p(y_i\mid x_i,\theta) = \argmin \frac{1}{\sigma_p^2}\norm{\theta}_2^2 + \sum [\frac{1}{\sigma\left(x_{i} ; \theta\right)^{2}}\left\|y_{i}-\mu\left(x_{i} ; \theta\right)\right\|^{2}+\log \sigma\left(x_{i} ; \theta\right)^{2}]$. Therefore, the network can attenuate the loss for certain data points by attributing the error to large variance.
+
+\subsection{Variational Inference for BNN}
+
+Idea: apply variational inference on $p(\theta\mid X,Y)\approx q_\lambda(\theta)$.
+
+$p(y^*\mid x^*, X,Y)\approx \E_{\theta\sim q_\lambda}[p(y^*\mid x^*,\theta)]\approx \frac{1}{m}\sum_{i=1}^m p(y^*\mid x^*,\theta_i)$. Therefore, $\E(y^*\mid x^*, X,Y) = \frac{1}{m}\sum_i \mu(x^*; \theta_i)$ and $\var(y^*\mid x^*,X,Y) = \E_{\theta\mid X,Y}(\var(y^*\mid x^*,\theta))+\var_{\theta\mid X,Y}(\E(y^*\mid x^*,\theta)) = \frac{1}{m}\sum_i \sigma^2(x^*, \theta_i)+\frac{1}{m}\sum_i(\mu(x^*,\theta_i)-\bar{\mu(x^*)})$. $\E_{\theta\mid X,Y}(\var(y^*\mid x^*,\theta))$ is the aleatoric uncertainty and $\var_{\theta\mid X,Y}(\E(y^*\mid x^*,\theta))$ is the epistemic uncertainty.

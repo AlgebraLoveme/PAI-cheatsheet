@@ -1,0 +1,46 @@
+\section{BLR and GP}
+
+\subsection{Properties of Multi-variate Gaussian}
+
+\begin{itemize}
+    \item $\mu_{A \mid B}=\mu_{A}+\Sigma_{A B} \Sigma_{B B}^{-1}\left(\mathbf{x}_{B}-\mu_{B}\right)$.
+    \item $\Sigma_{A \mid B}=\Sigma_{A A}-\Sigma_{A B} \Sigma_{B B}^{-1} \Sigma_{B A}$.
+    \item $MX \sim \normal(M\mu_X, M\Sigma_X M^T)$.
+    \item Assume $p=\normal(\mu_0,\Sigma_0)$ and $q=\normal(\mu_1,\Sigma_1)$, then $K L(p \| q)=\frac{1}{2}(\operatorname{tr}\left(\Sigma_{1}^{-1} \Sigma_{0}\right)+\left(\mu_{1}-\mu_{0}\right)^{T} \Sigma_{1}^{-1}\left(\mu_{1}-\mu_{0}\right)-d+\ln \left(\left|\Sigma_{1}\right| / \left|\Sigma_{0}\right| \right))$.
+    \item Entropy $H(q)=-\int q(\theta)\log q(\theta) d\theta$. $H(\normal(\mu,\Sigma)) = \frac{1}{2} \log |2\pi e\Sigma|$.
+\end{itemize}
+
+A general $n$-dim distribution has at least $O(2^n)$ parameters, but a Gaussian only
+has $O(n^2)$.
+
+\subsection{Bayesian Linear Regression}
+
+Idea: use a prior $p(w)$ on weights for the model $y=w^T x+\epsilon$, $\epsilon\sim \normal(0,\sigma_n^2)$. Then use the full posterior $p(w\mid X,Y)$ to do inference. This allows us to use a distribution as the prediction, thus quantifies the uncertainty.
+
+If $p(w)=\normal(0,\sigma_p^2 I)$, then MAP estimate $\argmax_w P(w\mid X,Y) = \argmin_w \norm{Y-W^T x}^2 +\frac{\sigma_n^2}{\sigma_p^2}\norm{w}_2^2$, i.e., Ridge Regression. Instead, BLR predicts $p(y^*\mid X,Y,x^*)=\normal(\bar{\mu}^T x^*, x^{*T}\bar{\Sigma}x^*+\sigma_n^2)$, where $\bar{\mu} = (X^TX+\frac{\sigma_n^2}{\sigma_p^2}I)^{-1}X^T Y$, $\bar{\Sigma}=\left(\frac{\sigma_p^2}{\sigma_n^2}X^T X+I\right)^{-1}$. $x^{*T}\bar{\Sigma}x^*$ is called \emph{epistemic} (the uncertainty about $f^*$) and $\sigma_n^2$ is called \emph{aleatoric} (the uncertainty about $y^*\mid f^*$).
+
+\subsection{Gaussian Process}
+
+Goal: predict for infinite number of $x^*$, e.g., predict $y(x)$ for $x\in(0,1)$.
+
+Def: A GP is a  set of random variables $f(X)$, defined on some index set $X$, s.t.  $\exists \mu: \mathcal{X}\rightarrow \mathcal{R}$, $k:\mathcal{X}\times \mathcal{X}\rightarrow\mathcal{R}$ such that $\forall A=\{x_1,\dots,x_m\}\subset X$, it holds that $f_A\sim\normal(\mu_A, K_{AA})$.
+
+Kernels: (1) symmetric and (2) positive semi-definite. Called \emph{stationary} if $k(x,x^\prime)=k(x-x^\prime)$. Called \emph{isotropic} if $k(x,x^\prime)=k(\norm{x-x^\prime}^2)$. Squared exponential kernel is analytic, exponential kernel is continuous but nowhere differentiable, Matren kernel with parameter $v$ is $v$ times differentiable.
+
+Suppose $f\sim GP(\mu, k)$ and we observe $y_i=f(x_i)+\epsilon_i$ where $\epsilon\sim\normal(0,\sigma^2)$. Then $(f\mid A,y(A))\sim GP(\mu^\prime, k^\prime)$, where $\mu^\prime(x) = \mu(x)+k_{x,A}(K_{AA}+\sigma^2I)^{-1}(y_A-\mu_A)$ and $k^\prime(x,x^\prime)=k(x,x^\prime)-k_{x,A}(K_{AA}+\sigma^2I)^{-1}k_{A,x^\prime}$.
+
+The convention: set $\mu(x)=0$ for prior. We use MLE to estimate the parameters of the kernel function, i.e., $\theta = \argmax p(y\mid x, f_\theta) = \argmax \normal(0, K_y) = \argmin y^T K_y^{-1}y+\log|K_y|$, where $K_y=K_{xx}(\theta)+\sigma_n^2I$.
+
+\subsection{Fast GP Methods}
+
+Idea: avoid the inversion of $n\times n$ matrix which is $\Theta(n^3)$.
+
+\begin{enumerate}
+    \item Exploiting parallelism: use GPU to speed up the matrix operation. Do not change the complexity.
+    \item Local methods: to predict at $x$, only condition on ``close'' points $x^\prime$ where $|k(x,x^\prime)|>\tau$. Still expensive if many points are considered.
+    \item Approximate the kernel: use a low dimensional approximation $k(x,x^\prime)\approx \phi(x)^T \phi(x)$, $\phi(x)\in \mathcal{R}^m$. The complexity is $O(nm^2+m^3)$. This includes:
+    \begin{itemize}
+        \item Random Fourier Features. The Fourier transform of stationary kernels is $k(x-x^\prime) = \int p(w)e^{iw^T(x-x^\prime)} dw$, where $p(w)$ is non-negative because of the positive semi-definiteness. We can scale $p(w)$ s.t. $p(w)$ is a distribution. Then $k(x-x^\prime) = \E_{w,b} (z_{w,b}(x)\cdot z_{w,b}(x^\prime))$, where $z_{w,b}(x)=\sqrt{2}\cos(w^Tx+b)$, $w\sim p(w)$ and $b\sim U([0,2\pi])$. Then use sample average as the approximation of the expectation. RFF approximates the kernel function uniformly well.
+        \item Inducing Point Method. Idea: summarize function via a set of inducing points $u$. Approximate $p(f, f^*)$ by $\int q(f^*\mid u)q(f\mid u)p(u) du$. Complexity is $O(n|u|^3)$.
+    \end{itemize}
+\end{enumerate}

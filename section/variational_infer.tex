@@ -1,0 +1,48 @@
+\section{Bayesian Inference via Approximation}
+
+Idea: approximate the exact distribution to speed up Bayesian inference which requires integration. $p(\theta\mid y) = p(\theta, y)/Z$. We assume $p(\theta, y)=p(\theta)p(y\mid\theta)$ is easy to evaluate, but $Z = \int p(\theta, y)p(\theta)$ is intractable. Therefore, we seek $p(\theta\mid y)\approx q(\theta \mid \lambda)$.
+
+\subsection{Laplacian Method}
+
+Idea: use Gaussian to approximate, estimated by second order expansion. $q(\theta)=\normal(\hat{\theta}, \lambda^{-1})$, where $\hat{\theta}=\argmax p(\theta\mid y)$ and $\lambda = -\nabla^2 \log p(\hat{\theta}\mid y)$.
+
+Problem: it first search for MAP and then matches the curvature. Could lead to poor approximation when there are multiple peaks.
+
+\subsection{Variational Inference}
+
+Idea: minimize the distance (KL divergence) between approximation and the exact distribution, i.e., $q_{\lambda^*} = \argmin_\lambda KL(q_\lambda||p) = \argmin \int q(\theta)\log(q(\theta)/p(\theta)) d\theta$.
+
+\subsubsection*{Minimizing KL divergence via maximizing ELBO}
+By expanding, $\argmin_q KL(q(\theta)||p(\theta \mid y)) = \argmax_q \E_{\theta\sim q(\theta)} [\log p(y\mid\theta)] - KL(q(\theta)||p(\theta))$, which converts the posterior to conditional evidence and prior (the ELBO). It is called Evidence Lower Bound because $\log p(y) = \log \E_{\theta\sim q(\theta)}[p(y\mid \theta)\frac{p(\theta)}{q(\theta)}] \ge \E_{\theta\sim q(\theta)} [\log(p(y\mid \theta)\frac{p(\theta)}{q(\theta)})] = \E_{\theta\sim q(\theta)} [\log p(y\mid\theta)] - KL(q(\theta)||p(\theta))$, thus a lower bound of $\log p(y)$.
+
+
+\subsection{Markov Chain Monte Carlo}
+
+Idea: use empirical distribution (samples) as the distribution approximation, i.e., $p(y^*\mid x^*, X, Y) = \E_{\theta\sim p(\theta\mid X,Y)} p(f^*\mid x^*,\theta)\approx \frac{1}{m} \sum_{i=1}^m p(y^*\mid x^*,\theta_i)$, where $\theta_i\sim p(\theta\mid X,Y)$. The approximation deviation decreases exponentially w.r.t. \#samples. Challenge: how to sample from the exact distribution.
+
+A Markov Chain has a unique stationary distribution $\frac{1}{Z}Q(x)$ if it is ergodic (irreducible and aperiodic) and $\forall x, x^\prime$, $Q(x)P(x^\prime\mid x)=Q(x^\prime)P(x\mid x^\prime)$ (sufficient, unnecessary).
+
+\subsubsection*{Metropolis-Hastings Sampling}
+
+Goal: sample when only a function proportional to the distribution is known.
+
+Given a proposal distribution $R(x^\prime\mid x)$, the Markov Chain is constructed as follows: for every step, sample $x^\prime \sim R(x^\prime\mid x_{t})$; with probability $\alpha=\min\{1, \frac{Q(x^\prime) R(x_t\mid x^\prime)}{Q(x)R(x^\prime\mid x_t)}\}$, set $x_{t+1}=x^\prime$, o.w. set $x_{t+1}=x_t$. If $Q(x^\prime) R(x_t\mid x^\prime)=0$, then write $\alpha=0$, regardless of the denominator.
+
+\begin{itemize}
+    \item MALA (aka LMC): $R(x^{\prime} \mid x)=\normal(x-\tau \nabla f(x), 2 \tau I)$. For log-concave distributions ($p=\frac{1}{Z}\exp(-f(x))$ where $f$ is convex), mixing time is polynomial.
+    \item SGLD: SGD + Gaussian noise. Converge if $\eta_t=\Theta(t^{-1/3})$.
+    \item HMC: add momentum.
+\end{itemize}
+
+
+\subsubsection*{Gibbs Sampling}
+
+Goal: sample from high-dimension when the conditional sampling is easy.
+
+The Markov Chain is constructed as follows: for every step, randomly pick one dimension $i$, then update $x_i\sim P(x_i\mid x_{-i})$. In practice, we can sequentially sample all dimensions one by one. The rationale: $P(x_i\mid x_{-i})\propto Q(x_i, x_{-i})$.
+
+\subsubsection*{Convergence of MCMC}
+
+Ergodic Theorem: asymptotic time average (mean of function values from the ergodic MC after infinite steps) is equal to the space average (the true expectation) almost surely if the space average is finite.
+
+In practice: ignore the first $t_0$ samples, i.e., burn-in period.
