@@ -10,9 +10,9 @@ Problem: it first search for MAP and then matches the curvature. Could lead to p
 
 \subsection{Variational Inference}
 
-Idea: minimize the distance (KL divergence) between approximation and the exact distribution, i.e., $q_{\lambda^*} = \argmin_\lambda KL(q_\lambda||p) = \argmin \int q(\theta)\log(q(\theta)/p(\theta)) d\theta$.
+Idea: minimize the distance (KL divergence) between approximation and the exact distribution, i.e., $\lambda^* = \argmin_\lambda KL(q_\lambda||p) = \argmin \int q(\theta)\log(q(\theta)/p(\theta)) d\theta$.
 
-\subsubsection*{Minimizing KL divergence via maximizing ELBO}
+\subsubsection*{Minimizing KL via maximizing ELBO}
 By expanding, $\argmin_q KL(q(\theta)||p(\theta \mid y)) = \argmax_q \E_{\theta\sim q(\theta)} [\log p(y\mid\theta)] - KL(q(\theta)||p(\theta))$, which converts the posterior to conditional evidence and prior (the ELBO). It is called Evidence Lower Bound because $\log p(y) = \log \E_{\theta\sim q(\theta)}[p(y\mid \theta)\frac{p(\theta)}{q(\theta)}] \ge \E_{\theta\sim q(\theta)} [\log(p(y\mid \theta)\frac{p(\theta)}{q(\theta)})] = \E_{\theta\sim q(\theta)} [\log p(y\mid\theta)] - KL(q(\theta)||p(\theta))$, thus a lower bound of $\log p(y)$.
 
 

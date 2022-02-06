@@ -6,6 +6,8 @@ Idea: apply Bayesian methods on NN, i.e., use the posterior distribution of weig
 
 If we apply $p(\theta)=\normal(0,\sigma_p^2 I)$, then $\hat{\theta} = \argmin -\log p(\theta) - \sum \log p(y_i\mid x_i,\theta) = \argmin \frac{1}{\sigma_p^2}\norm{\theta}_2^2 + \sum [\frac{1}{\sigma\left(x_{i} ; \theta\right)^{2}}\left\|y_{i}-\mu\left(x_{i} ; \theta\right)\right\|^{2}+\log \sigma\left(x_{i} ; \theta\right)^{2}]$. Therefore, the network can attenuate the loss for certain data points by attributing the error to large variance.
 
+For NN, the inference integral is hard, can use approximation such as (1) Black-box stochastic variational inference, (2) MCMC (summarize iteration by keeping only the mean and the variance), (3) Monte-Carlo Dropout (use dropout in both the training and the inference time) and (4) Probabilistic Ensembles (train multiple models by random subsamples).
+
 \subsection{Variational Inference for BNN}
 
 Idea: apply variational inference on $p(\theta\mid X,Y)\approx q_\lambda(\theta)$.

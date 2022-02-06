@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.22)  6 FEB 2022 14:58
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.22)  6 FEB 2022 21:58
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1274,17 +1274,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 7--8
  []
 
 )
-Underfull \hbox (badness 10000) in paragraph at lines 13--64
+Underfull \hbox (badness 10000) in paragraph at lines 15--64
 [] [][] \OML/jkp/m/it/10 p\OT1/jkp/m/n/10 (+20) (\OML/jkp/m/it/10 y[] \OMS/jkp/m/n/10 j \OML/jkp/m/it/10 x[]; ^^R[]\OT1/jkp/m/n/10 (+20) )$[]\T1/jkp/m/n/10 (+20) . The-re-fo-re, $[]\U/jkpsyb/m/n/10 E\OT1/jkp/m/n/10 (+20) (\OML/jkp/m/it/10 y[] \OMS/jkp/m/n/10 j
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 13--64
+Underfull \hbox (badness 10000) in paragraph at lines 15--64
 \OML/jkp/m/it/10 x[]; X; Y\OT1/jkp/m/n/10 (+20) ) = [] [][] \OML/jkp/m/it/10 ^^V\OT1/jkp/m/n/10 (+20) (\OML/jkp/m/it/10 x[]\OT1/jkp/m/n/10 (+20) ; \OML/jkp/m/it/10 ^^R[]\OT1/jkp/m/n/10 (+20) )$[] \T1/jkp/m/n/10 (+20) and $[][]\OT1/jkp/m/n/10 (+20) (\OML/jkp/m/it/10 y[] \OMS/jkp/m/n/10 j
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 13--64
+Underfull \hbox (badness 10000) in paragraph at lines 15--64
 \OML/jkp/m/it/10 x[]; X; Y\OT1/jkp/m/n/10 (+20) ) = \U/jkpsyb/m/n/10 E[]\OT1/jkp/m/n/10 (+20) ([](\OML/jkp/m/it/10 y[] \OMS/jkp/m/n/10 j \OML/jkp/m/it/10 x[]; ^^R\OT1/jkp/m/n/10 (+20) )) +
  []
 
@@ -1370,15 +1370,15 @@ Underfull \hbox (badness 10000) in paragraph at lines 77--68
 
 (./section/miscella.tex) [2] (./main.aux) ) 
 Here is how much of TeX's memory you used:
- 23835 strings out of 479382
- 469020 string characters out of 5873307
- 872335 words of memory out of 5000000
+ 23840 strings out of 479382
+ 469003 string characters out of 5873307
+ 872574 words of memory out of 5000000
  40132 multiletter control sequences out of 15000+600000
- 508632 words of font info for 271 fonts, out of 8000000 for 9000
+ 509113 words of font info for 275 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 108i,7n,111p,732b,394s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 108i,7n,111p,732b,335s stack positions out of 5000i,500n,10000p,200000b,80000s
 {d:/texlive/2020/texmf-dist/fonts/enc/dvips/kpfonts/kpfonts-expert.enc}{d:/texlive/2020/texmf-dist/fonts/enc/dvips/base/8r.enc}{d:/texlive/2020/texmf-dist/fonts/enc/dvips/sourcesanspro/a_emkxm5.enc}<d:/texlive/2020/texmf-dist/fonts/type1/adobe/sourcesanspro/SourceSansPro-Bold.pfb><d:/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpbn8a.pfb><d:/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpex.pfb><d:/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpmi.pfb><d:/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpmia.pfb><d:/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpmit8a.pfb><d:/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpmn8a.pfb><d:/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpmne.pfb><d:/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpsy.pfb><d:/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpsyb.pfb>
-Output written on main.pdf (2 pages, 179573 bytes).
+Output written on main.pdf (2 pages, 179002 bytes).
 PDF statistics:
  57 PDF objects out of 1000 (max. 8388607)
  42 compressed objects within 1 object stream
