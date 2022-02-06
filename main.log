@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.22)  22 JAN 2022 22:03
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.22)  6 FEB 2022 14:58
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1158,15 +1158,15 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 * layout: <same size as paper>
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
 * modes: landscape 
-* h-part:(L,W,R)=(5.69054pt, 833.66577pt, 5.69054pt)
-* v-part:(T,H,B)=(5.69054pt, 586.1268pt, 5.69054pt)
+* h-part:(L,W,R)=(11.38109pt, 822.28467pt, 11.38109pt)
+* v-part:(T,H,B)=(11.38109pt, 574.7457pt, 11.38109pt)
 * \paperwidth=845.04684pt
 * \paperheight=597.50787pt
-* \textwidth=833.66577pt
-* \textheight=586.1268pt
-* \oddsidemargin=-66.57945pt
-* \evensidemargin=-66.57945pt
-* \topmargin=-103.57945pt
+* \textwidth=822.28467pt
+* \textheight=574.7457pt
+* \oddsidemargin=-60.8889pt
+* \evensidemargin=-60.8889pt
+* \topmargin=-97.8889pt
 * \headheight=12.0pt
 * \headsep=25.0pt
 * \topskip=11.0pt
@@ -1264,18 +1264,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 10--11
  []
 
 ) (./section/variational_infer.tex
-Underfull \hbox (badness 10000) in paragraph at lines 21--22
-\T1/jkp/m/n/10 (+20) as the dis-tri-bu-ti-on ap-pro-xi-ma-ti-on, i.e.,
+Underfull \hbox (badness 6001) in paragraph at lines 21--22
+[]\T1/jkp/m/n/10 (+20) Idea: use em-pi-ri-cal dis-tri-bu-ti-on (samp-
  []
 
 ) (./section/bdl.tex
 Underfull \hbox (badness 10000) in paragraph at lines 7--8
 [] \OMS/jkp/m/n/10 ^^@ [] \OML/jkp/m/it/10 p\OT1/jkp/m/n/10 (+20) (\OML/jkp/m/it/10 ^^R\OT1/jkp/m/n/10 (+20) ) \OMS/jkp/m/n/10 ^^@ [] [] \OML/jkp/m/it/10 p\OT1/jkp/m/n/10 (+20) (\OML/jkp/m/it/10 y[] \OMS/jkp/m/n/10 j \OML/jkp/m/it/10 x[]; ^^R\OT1/jkp/m/n/10 (+20) ) =
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 7--8
-[] [] [][] \OT1/jkp/m/n/10 (+20) + [][[] [][] +
  []
 
 )
@@ -1285,7 +1280,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 13--64
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 13--64
-\U/jkpsyb/m/n/10 E[]\OT1/jkp/m/n/10 (+20) ([](\OML/jkp/m/it/10 y[] \OMS/jkp/m/n/10 j \OML/jkp/m/it/10 x[]; ^^R\OT1/jkp/m/n/10 (+20) )) + [][](\U/jkpsyb/m/n/10 E\OT1/jkp/m/n/10 (+20) (\OML/jkp/m/it/10 y[] \OMS/jkp/m/n/10 j
+\OML/jkp/m/it/10 x[]; X; Y\OT1/jkp/m/n/10 (+20) ) = [] [][] \OML/jkp/m/it/10 ^^V\OT1/jkp/m/n/10 (+20) (\OML/jkp/m/it/10 x[]\OT1/jkp/m/n/10 (+20) ; \OML/jkp/m/it/10 ^^R[]\OT1/jkp/m/n/10 (+20) )$[] \T1/jkp/m/n/10 (+20) and $[][]\OT1/jkp/m/n/10 (+20) (\OML/jkp/m/it/10 y[] \OMS/jkp/m/n/10 j
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--64
+\OML/jkp/m/it/10 x[]; X; Y\OT1/jkp/m/n/10 (+20) ) = \U/jkpsyb/m/n/10 E[]\OT1/jkp/m/n/10 (+20) ([](\OML/jkp/m/it/10 y[] \OMS/jkp/m/n/10 j \OML/jkp/m/it/10 x[]; ^^R\OT1/jkp/m/n/10 (+20) )) +
  []
 
 (./section/bayes_data.tex [1
@@ -1293,13 +1293,18 @@ Underfull \hbox (badness 10000) in paragraph at lines 13--64
 
 
 
-{d:/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]) (./section/planning.tex
+{d:/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+Underfull \hbox (badness 10000) in paragraph at lines 22--23
+[]\T1/jkp/m/n/10 (+20) Idea: op-ti-mism. Choo-se $[]\OML/jkp/m/it/10 x[] \OT1/jkp/m/n/10 (+20) =
+ []
+
+) (./section/planning.tex
 Underfull \hbox (badness 10000) in paragraph at lines 11--14
 []\T1/jkp/m/n/10 (+20) Define the va-lue func-ti-on: $[]\OML/jkp/m/it/10 V[]\OT1/jkp/m/n/10 (+20) (\OML/jkp/m/it/10 x\OT1/jkp/m/n/10 (+20) ) =
  []
 
 
-Underfull \hbox (badness 7344) in paragraph at lines 23--24
+Underfull \hbox (badness 5847) in paragraph at lines 23--24
 []\OML/jkp/m/it/10 V[]\OT1/jkp/m/n/10 (+20) (\OML/jkp/m/it/10 x\OT1/jkp/m/n/10 (+20) )$[]\T1/jkp/m/n/10 (+20) . At each ite-ra-ti-on, set $[]\OML/jkp/m/it/10 Q\OT1/jkp/m/n/10 (+20) (\OML/jkp/m/it/10 x; a\OT1/jkp/m/n/10 (+20) ) =
  []
 
@@ -1334,13 +1339,8 @@ Underfull \hbox (badness 10000) in paragraph at lines 65--67
  []
 
 
-Underfull \hbox (badness 7522) in paragraph at lines 65--67
+Underfull \hbox (badness 6032) in paragraph at lines 65--67
 \T1/jkp/m/n/10 (+20) for any $[]\OML/jkp/m/it/10 b\OT1/jkp/m/n/10 (+20) (\OML/jkp/m/it/10 ^^\[]\OT1/jkp/m/n/10 (+20) )$[]\T1/jkp/m/n/10 (+20) . Let $[]\OML/jkp/m/it/10 G[] \OT1/jkp/m/n/10 (+20) = [][] \OML/jkp/m/it/10 ^^M[]r[]$[]
- []
-
-
-Underfull \hbox (badness 5893) in paragraph at lines 74--76
-[]\T1/jkp/m/n/10 (+20) We can wri-te the po-li-cy gra-di-ent (no-
  []
 
 
@@ -1349,8 +1349,8 @@ Underfull \hbox (badness 10000) in paragraph at lines 74--76
  []
 
 
-Underfull \hbox (badness 5607) in paragraph at lines 74--76
-\T1/jkp/m/n/10 (+20) Actor-Crtic al-go-rithm up-da-tes the pa-ra-
+Underfull \hbox (badness 10000) in paragraph at lines 74--76
+\OML/jkp/m/it/10 ^^Q[] [] \OMS/jkp/m/n/10 ^^A
  []
 
 )
@@ -1364,26 +1364,21 @@ Underfull \hbox (badness 10000) in paragraph at lines 77--68
  []
 
 
-Underfull \hbox (badness 5417) in paragraph at lines 77--68
-[][][] \OML/jkp/m/it/10 Q\OT1/jkp/m/n/10 (+20) (\OML/jkp/m/it/10 x; a\OT1/jkp/m/n/10 (+20) )$[] \T1/jkp/m/n/10 (+20) by $[]\OML/jkp/m/it/10 Q\OT1/jkp/m/n/10 (+20) (\OML/jkp/m/it/10 x; ^^Y\OT1/jkp/m/n/10 (+20) (\OML/jkp/m/it/10 x\OT1/jkp/m/n/10 (+20) ))$[]\T1/jkp/m/n/10 (+20) , i.e., $[]\OML/jkp/m/it/10 L [] \OT1/jkp/m/n/10 (+20) =
- []
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 77--68
 [] [][]$[]
  []
 
 (./section/miscella.tex) [2] (./main.aux) ) 
 Here is how much of TeX's memory you used:
- 23837 strings out of 479382
- 468986 string characters out of 5873307
- 873755 words of memory out of 5000000
+ 23835 strings out of 479382
+ 469020 string characters out of 5873307
+ 872335 words of memory out of 5000000
  40132 multiletter control sequences out of 15000+600000
- 508876 words of font info for 273 fonts, out of 8000000 for 9000
+ 508632 words of font info for 271 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  108i,7n,111p,732b,394s stack positions out of 5000i,500n,10000p,200000b,80000s
 {d:/texlive/2020/texmf-dist/fonts/enc/dvips/kpfonts/kpfonts-expert.enc}{d:/texlive/2020/texmf-dist/fonts/enc/dvips/base/8r.enc}{d:/texlive/2020/texmf-dist/fonts/enc/dvips/sourcesanspro/a_emkxm5.enc}<d:/texlive/2020/texmf-dist/fonts/type1/adobe/sourcesanspro/SourceSansPro-Bold.pfb><d:/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpbn8a.pfb><d:/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpex.pfb><d:/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpmi.pfb><d:/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpmia.pfb><d:/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpmit8a.pfb><d:/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpmn8a.pfb><d:/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpmne.pfb><d:/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpsy.pfb><d:/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpsyb.pfb>
-Output written on main.pdf (2 pages, 179719 bytes).
+Output written on main.pdf (2 pages, 179573 bytes).
 PDF statistics:
  57 PDF objects out of 1000 (max. 8388607)
  42 compressed objects within 1 object stream

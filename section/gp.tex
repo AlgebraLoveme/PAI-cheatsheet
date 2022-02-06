@@ -41,6 +41,6 @@ Idea: avoid the inversion of $n\times n$ matrix which is $\Theta(n^3)$.
     \item Approximate the kernel: use a low dimensional approximation $k(x,x^\prime)\approx \phi(x)^T \phi(x)$, $\phi(x)\in \mathcal{R}^m$. The complexity is $O(nm^2+m^3)$. This includes:
     \begin{itemize}
         \item Random Fourier Features. The Fourier transform of stationary kernels is $k(x-x^\prime) = \int p(w)e^{iw^T(x-x^\prime)} dw$, where $p(w)$ is non-negative because of the positive semi-definiteness. We can scale $p(w)$ s.t. $p(w)$ is a distribution. Then $k(x-x^\prime) = \E_{w,b} (z_{w,b}(x)\cdot z_{w,b}(x^\prime))$, where $z_{w,b}(x)=\sqrt{2}\cos(w^Tx+b)$, $w\sim p(w)$ and $b\sim U([0,2\pi])$. Then use sample average as the approximation of the expectation. RFF approximates the kernel function uniformly well.
-        \item Inducing Point Method. Idea: summarize function via a set of inducing points $u$. Approximate $p(f, f^*)$ by $\int q(f^*\mid u)q(f\mid u)p(u) du$. Complexity is $O(n|u|^3)$.
+        \item Inducing Point Method. Idea: summarize function via a set of inducing points $u$. Approximate $p(f, f^*)$ by $\int q(f^*\mid u)q(f\mid u)p(u) du$. Complexity is $O(n+m^3)$.
     \end{itemize}
 \end{enumerate}
